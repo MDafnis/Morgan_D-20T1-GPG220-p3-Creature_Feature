@@ -382,9 +382,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378c12d06b03a43acbe04438c30745ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FeatureNoise_X: 4
-  FeatureNoise_Z: 8
-  FeatureNoise_Amplitude: 1
+  FeatureNoise_X: 8
+  FeatureNoise_Z: 6
+  FeatureNoise_Amplitude: 0.07
   TextureNoise_X: 16
   TextureNoise_Z: 16
-  TextureNoise_Amplitude: 0.5
+  TextureNoise_Amplitude: 0.05
