@@ -79,7 +79,7 @@ public class TerrainGenerator : MonoBehaviour
 			for(int z = 0; z < height; ++z)
 			{
                 // below 20% of max height - force to be sand
-                if (terrainHeights[x, z] < 0.2f)
+                if (terrainHeights[x, z] < 0.0175f)
                 {
                     splatmapWeights[x, z, 0] = 1f;
                     splatmapWeights[x, z, 1] = 0f;
@@ -99,7 +99,7 @@ public class TerrainGenerator : MonoBehaviour
 
                     splatmapWeights[x, z, 0] = 0f;
                     splatmapWeights[x, z, 1] = 1f - grassWeight;
-                    splatmapWeights[x, z, 2] = grassWeight;
+                    splatmapWeights[x, z, 2] = 0.2f + grassWeight; // grass
                     splatmapWeights[x, z, 3] = 0f;                    
                 }
 			}
