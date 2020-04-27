@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{9C0789FB-8029-D33C-C00C-9A5C7F0C25C3}</ProjectGuid>
+    <ProjectGuid>{242A8B2B-D9F6-E807-D1A9-392CCE13BCE9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -64,33 +64,40 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Pathdata.cs" />
     <Compile Include="Assets\Scripts\PathFinding.cs" />
+    <Compile Include="Assets\Scripts\States\BaseState.cs" />
+    <Compile Include="Assets\Scripts\States\FSM.cs" />
+    <Compile Include="Assets\Scripts\States\FSMCharacter.cs" />
+    <Compile Include="Assets\Scripts\States\State_Idle.cs" />
+    <Compile Include="Assets\Scripts\States\State_MoveToLocation.cs" />
+    <Compile Include="Assets\Scripts\States\State_PickLocation.cs" />
     <Compile Include="Assets\Scripts\TerrainGenerator.cs" />
+    <None Include="Assets\Shader\Insideout.shader" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>F:/University/Proc Gen Demo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>F:/University/Morgan_D-20T1-GPG220-p3-Creature_Feature/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>F:/University/Proc Gen Demo/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>F:/University/Morgan_D-20T1-GPG220-p3-Creature_Feature/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>F:/University/Proc Gen Demo/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>F:/University/Morgan_D-20T1-GPG220-p3-Creature_Feature/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>F:/University/Proc Gen Demo/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>F:/University/Morgan_D-20T1-GPG220-p3-Creature_Feature/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>F:/University/Proc Gen Demo/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>F:/University/Morgan_D-20T1-GPG220-p3-Creature_Feature/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>F:/University/Proc Gen Demo/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>F:/University/Morgan_D-20T1-GPG220-p3-Creature_Feature/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>F:/University/Proc Gen Demo/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>F:/University/Morgan_D-20T1-GPG220-p3-Creature_Feature/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>F:/University/Proc Gen Demo/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>F:/University/Morgan_D-20T1-GPG220-p3-Creature_Feature/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>F:/University/Proc Gen Demo/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>F:/University/Morgan_D-20T1-GPG220-p3-Creature_Feature/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.2f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
