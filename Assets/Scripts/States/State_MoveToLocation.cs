@@ -7,6 +7,7 @@ public class State_MoveToLocation : BaseState
     public float LocationReachedTresheld = 0.1f;
     public float MovementTime = 5f;
     protected float MovementProgress = -1f;
+    Vector3 TargetLocation, StartLocation;
 
     public override void State_Init()
     {

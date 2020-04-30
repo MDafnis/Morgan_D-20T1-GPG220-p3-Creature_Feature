@@ -19,10 +19,16 @@ public class TerrainGenerator : MonoBehaviour
     private int originalSphereList = 174;
     public List<GameObject> sphereList = new List<GameObject>();
 
+    [Header("Dome Info")]
+    public int domeRadius = 75;
+
+
+    Pathdata pd;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        pd = FindObjectOfType<Pathdata>();
     }
 
     // Update is called once per frame
@@ -144,6 +150,12 @@ public class TerrainGenerator : MonoBehaviour
 
                 PathdataNode node = pathdata.CreateNode(x, z, nodePosition);
 
+                int distFromCenterSq = (x - (width / 2)) * (x - (width / 2)) + (z - (height / 2)) * (z - (height / 2));
+                if (distFromCenterSq > (domeRadius*domeRadius))
+                {
+                    node.blocking = true;
+                }
+
                 int distToBlockoutSq = (x - blockoutLocation.x) * (x - blockoutLocation.x) + (z - blockoutLocation.y) * (z - blockoutLocation.y);
                 if (distToBlockoutSq < blockoutRadiusSq)
                 {
@@ -229,8 +241,70 @@ public class TerrainGenerator : MonoBehaviour
                 }
 			}
 		}
+        for(int x = 0; x < width; ++x)
+        {
+            for(int z = 0; z < height; ++z)
+            {
+                int pathDataSurroundingIndex = x + z * height; // just made it multiply by height as my terrain is a square meaning it is equal.
+
+                if(pd.AllNodes[pathDataSurroundingIndex].blocking)
+                {
+                    continue;
+                }
+
+                var edge = GetPathDataNodeWithinFace(x + 1, z, height); // right one
+                AddToEdges(edge, pathDataSurroundingIndex);
+
+                edge = GetPathDataNodeWithinFace(x + 1, z + 1, height); // top right
+                AddToEdges(edge, pathDataSurroundingIndex);
+
+                edge = GetPathDataNodeWithinFace(x - 1, z, height); // left one
+                AddToEdges(edge, pathDataSurroundingIndex);
+
+                edge = GetPathDataNodeWithinFace(x - 1, z + 1, height); //  top left
+                AddToEdges(edge, pathDataSurroundingIndex);
+
+                edge = GetPathDataNodeWithinFace(x - 1, z - 1, height); // bottom left
+                AddToEdges(edge, pathDataSurroundingIndex);
+
+                edge = GetPathDataNodeWithinFace(x + 1, z - 1, height); // bottom right
+                AddToEdges(edge, pathDataSurroundingIndex);
+
+                edge = GetPathDataNodeWithinFace(x, z - 1, height); // bottom middle
+                AddToEdges(edge, pathDataSurroundingIndex);
+
+                edge = GetPathDataNodeWithinFace(x, z + 1, height); // top middle
+                AddToEdges(edge, pathDataSurroundingIndex);
+            }
+        }
 
         // update the weights
         terrain.terrainData.SetAlphamaps(0, 0, splatmapWeights);
     }
+
+    private void AddToEdges(PathdataNode edge, int pathDataSurroundingIndex)
+    {
+        if (edge != null && !edge.blocking)
+        {
+            pd.AllNodes[pathDataSurroundingIndex].listOfEdges.Add(new PathdataEdge(edge));
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    public PathdataNode GetPathDataNodeWithinFace(int faceX, int faceY, int mapSize)
+    {
+        if(faceX < 0 || faceY < 0 || faceX >= mapSize || faceY >= mapSize)
+        {
+            return null;
+        }
+
+        int pathDataSurroundingIndex = faceX + faceY * mapSize;
+
+        return pd.AllNodes[pathDataSurroundingIndex];
+    }
+
+
 }

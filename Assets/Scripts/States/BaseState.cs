@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+/// <summary>
+/// Need to add a character to this area to reference to later.
+/// </summary>
+
 [System.Serializable]
 public class TransitionResponse
 {
