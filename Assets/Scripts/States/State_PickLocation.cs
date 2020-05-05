@@ -21,7 +21,8 @@ public class State_PickLocation : BaseState
             LocationPicked = true;
 
             // Not ideal - Recommended using a blackboard system instead
-            GetComponent<FSMCharacter>().LocationToRequest = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
+            var randomPlantLoc = TerrainGenerator.instance.sphereList[Random.Range(0, TerrainGenerator.instance.sphereList.Count)];
+            GetComponent<FSMCharacter>().LocationToRequest = new Vector2Int((int)randomPlantLoc.transform.position.x, (int)randomPlantLoc.transform.position.z);
         }
     }
 

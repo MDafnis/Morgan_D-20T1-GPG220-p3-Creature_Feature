@@ -49,6 +49,7 @@ public class Pathdata : MonoBehaviour
 {
     public Vector2Int WorldSize;
     public List<PathdataNode> AllNodes = new List<PathdataNode>();
+    public static Pathdata instance;
 
     public bool DEBUG_DrawPathdata = false;
 
@@ -69,7 +70,10 @@ public class Pathdata : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(instance == null)
+        {
+            instance = this;
+        }
     }
 
     // Update is called once per frame
@@ -88,6 +92,23 @@ public class Pathdata : MonoBehaviour
         AllNodes.Add(newNode);
 
         return newNode;
+    }
+
+    public PathdataNode FindNode(Vector2Int checkLoc)
+    {
+        int index = checkLoc.y * WorldSize.x + checkLoc.x;
+
+        if(checkLoc.x < 0 || checkLoc.y < 0 || checkLoc.x >= WorldSize.x || checkLoc.y >= WorldSize.y)
+        {
+            return null;
+        }
+
+        if(index < 0 || index > AllNodes.Count)
+        {
+            Debug.Log(index + "" + checkLoc + "" + WorldSize);
+        }
+
+        return AllNodes[index];
     }
 }
 

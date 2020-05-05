@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TerrainGenerator : MonoBehaviour
 {
+    public static TerrainGenerator instance;
+
     [Header("Feature Generation")]
     public int NumPasses = 5;
     public float FeatureNoise_X = 8f;
@@ -22,6 +24,10 @@ public class TerrainGenerator : MonoBehaviour
     [Header("Dome Info")]
     public int domeRadius = 75;
 
+    [Header("Shelters")]
+    public GameObject WaterShelter;
+    public GameObject StorageShelter;
+
 
     Pathdata pd;
 
@@ -29,6 +35,10 @@ public class TerrainGenerator : MonoBehaviour
     void Start()
     {
         pd = FindObjectOfType<Pathdata>();
+        if(instance == null)
+        {
+            instance = this;
+        }
     }
 
     // Update is called once per frame
@@ -115,27 +125,23 @@ public class TerrainGenerator : MonoBehaviour
 		int height = terrain.terrainData.alphamapHeight;
         int numLayers = terrain.terrainData.alphamapLayers;
 
-        Vector2Int blockoutLocation = new Vector2Int(75, 75);
-        int blockOutRadius = 25;
-        int blockoutRadiusSq = blockOutRadius * blockOutRadius;
+        //Vector2Int blockoutLocation = new Vector2Int(75, 75);
+        //int blockOutRadius = 25;
+        //int blockoutRadiusSq = blockOutRadius * blockOutRadius;
 
         Vector2Int waterShelterLocation = new Vector2Int(35, 35);
         int waterShelterRadius = 8;
         int waterShelterRadiusSq = waterShelterRadius * waterShelterRadius;
 
-        GameObject waterShelterSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        waterShelterSphere.transform.localScale = new Vector3(10, 10, 10);
-        waterShelterSphere.transform.position = new Vector3Int(35, 1, 35);
-        sphereList.Add(waterShelterSphere);
+        Instantiate(WaterShelter);
+        WaterShelter.transform.position = new Vector3Int(35, 3, 35);
 
         Vector2Int storageShelterLocation = new Vector2Int(75, 35);
         int storageShelterRadius = 10;
         int storageShelterRadiusSq = storageShelterRadius * storageShelterRadius;
 
-        GameObject storageShelterSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        storageShelterSphere.transform.localScale = new Vector3(10, 10, 10);
-        storageShelterSphere.transform.position = new Vector3Int(35, 1, 74);
-        sphereList.Add(storageShelterSphere);
+        Instantiate(StorageShelter);
+        StorageShelter.transform.position = new Vector3(35, 2.6f, 74);
 
         Pathdata pathdata = FindObjectOfType<Pathdata>();
 
@@ -156,21 +162,21 @@ public class TerrainGenerator : MonoBehaviour
                     node.blocking = true;
                 }
 
-                int distToBlockoutSq = (x - blockoutLocation.x) * (x - blockoutLocation.x) + (z - blockoutLocation.y) * (z - blockoutLocation.y);
-                if (distToBlockoutSq < blockoutRadiusSq)
-                {
-                    // if (distToBlockoutSq > treeRadiusSq)
-                    // {
-                    //     // Do tree spawning with higher scale factor on the noise
-                    // }
-
-                    splatmapWeights[x, z, 0] = 0f;
-                    splatmapWeights[x, z, 1] = 0f;
-                    splatmapWeights[x, z, 2] = 1f;
-                    splatmapWeights[x, z, 3] = 0f;
-
-                    continue;
-                }
+                //int distToBlockoutSq = (x - blockoutLocation.x) * (x - blockoutLocation.x) + (z - blockoutLocation.y) * (z - blockoutLocation.y);
+                //if (distToBlockoutSq < blockoutRadiusSq)
+                //{
+                //    // if (distToBlockoutSq > treeRadiusSq)
+                //    // {
+                //    //     // Do tree spawning with higher scale factor on the noise
+                //    // }
+                //
+                //    splatmapWeights[x, z, 0] = 0f;
+                //    splatmapWeights[x, z, 1] = 0f;
+                //    splatmapWeights[x, z, 2] = 1f;
+                //    splatmapWeights[x, z, 3] = 0f;
+                //
+                //    continue;
+                //}
 
                 int distToWaterShelterSq = (x - waterShelterLocation.x) * (x - waterShelterLocation.x) + (z - waterShelterLocation.y) * (z - waterShelterLocation.y);
                 if (distToWaterShelterSq < waterShelterRadiusSq)
@@ -229,6 +235,7 @@ public class TerrainGenerator : MonoBehaviour
                     {
                         // Spawn an object
                         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        sphere.GetComponent<SphereCollider>().enabled = false;
                         sphere.transform.position = nodePosition;
                         sphereList.Add(sphere);
 

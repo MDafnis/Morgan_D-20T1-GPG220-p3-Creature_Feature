@@ -5,10 +5,11 @@ using UnityEngine;
 public class FSMCharacter : MonoBehaviour
 {
     // Not ideal - Recommend using a blackboard system instead.
-    public Vector3 LocationToRequest;
+    public Vector2Int LocationToRequest;
     protected bool HasDestination = false;
     protected Vector3 Destination = Vector3.zero;
-    protected List<Vector3> Path = null;
+    protected Vector3 refDestination = Vector3.zero;
+    protected List<PathdataNode> Path = null;
     protected int CurrentPoint = -1;
     protected Rigidbody CharacterRB;
 
@@ -37,19 +38,19 @@ public class FSMCharacter : MonoBehaviour
     void Update()
     {
         // do we have no destination?
-        //if (!HasDestination)
-        //{
-        //    SetDestination(new Vector3(Random.Range(-9f, 9f), transform.position.y, Random.Range(-9f, 9f)));
-        //}
+        if (!HasDestination && TerrainGenerator.instance.sphereList.Count > 0)
+        {
+            SetDestination(new Vector3(TerrainGenerator.instance.WaterShelter.transform.position.x, transform.position.y, TerrainGenerator.instance.WaterShelter.transform.position.z));
+        }
 
         // can and should draw path?
         if (DEBUG_DrawPath && HasDestination)
         {
             // draw the path
-            Debug.DrawLine(transform.position, Path[CurrentPoint], Color.green);
+            Debug.DrawLine(transform.position, Path[CurrentPoint].WorldLocation, Color.green);
             for (int index = CurrentPoint; index < Path.Count - 1; ++index)
             {
-                Debug.DrawLine(Path[index], Path[index + 1], Color.blue);
+                Debug.DrawLine(Path[index].WorldLocation, Path[index + 1].WorldLocation, Color.blue);
             }
         }
     }
@@ -94,7 +95,7 @@ public class FSMCharacter : MonoBehaviour
         //      - Has it been trying to move but not moved much for a set time?
 
         // Get our desired movement vector
-        Vector3 desiredVector = Path[CurrentPoint] - transform.position;
+        Vector3 desiredVector = Path[CurrentPoint].WorldLocation - transform.position;
         float desiredSpeed = MaximumSpeed;
         desiredVector.y = 0;
         desiredVector.Normalize();
@@ -138,8 +139,8 @@ public class FSMCharacter : MonoBehaviour
         get
         {
             // Typically for this we do a 2D check
-            float distance2DSquared = Mathf.Pow(Path[CurrentPoint].x - transform.position.x, 2) +
-                                      Mathf.Pow(Path[CurrentPoint].z - transform.position.z, 2);
+            float distance2DSquared = Mathf.Pow(Path[CurrentPoint].WorldLocation.x - transform.position.x, 2) +
+                                      Mathf.Pow(Path[CurrentPoint].WorldLocation.z - transform.position.z, 2);
 
             return distance2DSquared < (PointReachedThreshold * PointReachedThreshold);
         }
@@ -156,36 +157,19 @@ public class FSMCharacter : MonoBehaviour
 
         // set the new destination
         Destination = newDestination;
+        refDestination = newDestination;
         HasDestination = true;
         CurrentPoint = 0;
 
         // TODO - Call to pathfinding would go here. 
-        // Path = Pathfinding.FindPath(transform.position, newDestination);
+        var myPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+        var destPos = new Vector2Int((int)newDestination.x, (int)newDestination.z);
+        Path = PathFinding.instance.FindPath(Pathdata.instance.FindNode(myPos), Pathdata.instance.FindNode(destPos));
 
-        // if (Path == null || Path.Count == 0)
-        // {
-        //     HasDestination = false;
-        //     return false;
-        // }
-
-        /// 
-        /// THIS BLOCK BELOW IS PLACEHOLDER TO CREATE A PATH.
-        /// 
-
-        // we're going to contruct a random path using the markers
-        //List<Marker> markers = new List<Marker>(FindObjectsOfType<Marker>());
-
-        // clear the path and then pick 3 markers
-        //Path = new List<Vector3>();
-        //while (Path.Count < 3 && markers.Count > 0)
-        //{
-        //    var marker = markers[Random.Range(0, markers.Count)];
-
-        //    Path.Add(marker.transform.position);
-        //    markers.Remove(marker);
-        //}
-
-        // add the destination point
-        //Path.Add(Destination);
+        if (Path == null || Path.Count == 0)
+        {
+             HasDestination = false;
+             return;
+        }
     }
 }

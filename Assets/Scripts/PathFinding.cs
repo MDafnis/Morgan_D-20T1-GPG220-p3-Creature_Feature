@@ -10,7 +10,7 @@ public class PathFindingNode : IEquatable<PathFindingNode>
     public float hCost; // How much it costs to get to the destination.
     public PathFindingNode parent; // The way to track back to a previous node
 
-    public PathFindingNode(PathdataNode node)
+    public PathFindingNode(PathdataNode node, int x, int z)
     {
         this.node = node;
     }
@@ -46,14 +46,22 @@ public class PathFindingNode : IEquatable<PathFindingNode>
 
 public class PathFinding : MonoBehaviour
 {
-    //PathFindingNode startNode,endNode;
+    public static PathFinding instance;
+
+    private void Start()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
 
     public List<PathdataNode> FindPath(PathdataNode start, PathdataNode end) // Start = start node location, End = end node location.
     {
         List<PathFindingNode> openList = new List<PathFindingNode>(); // if empty there's a problem.
         List<PathFindingNode> closeList = new List<PathFindingNode>();
-        PathFindingNode startNode = new PathFindingNode(start);
-        PathFindingNode endNode = new PathFindingNode(end);
+        PathFindingNode startNode = new PathFindingNode(start, (int)start.WorldLocation.x, (int)start.WorldLocation.y);
+        PathFindingNode endNode = new PathFindingNode(end, (int)end.WorldLocation.x, (int)end.WorldLocation.y);
         List<PathdataNode> nodeList = new List<PathdataNode>(); // list of nodes to create a path.
         int loopedIterations = 0;
 
@@ -137,7 +145,7 @@ public class PathFinding : MonoBehaviour
                 }
                 if(!continueLoop)
                 {
-                    PathFindingNode brotherNode = new PathFindingNode(neighbour.link);
+                    PathFindingNode brotherNode = new PathFindingNode(neighbour.link, (int)neighbour.link.WorldLocation.x, (int)neighbour.link.WorldLocation.y);
                     brotherNode.parent = bestNode;
                     brotherNode.gCost = bestNode.gCost + Vector3.Distance(bestNode.node.WorldLocation, brotherNode.node.WorldLocation);
                     brotherNode.hCost = Vector3.Distance(endNode.node.WorldLocation, brotherNode.node.WorldLocation);
@@ -178,4 +186,27 @@ public class PathFinding : MonoBehaviour
 
 
     //}
+
+    public PathFindingNode CreatePathNode(Vector3 checkLoc)
+    {
+        PathdataNode idealNode = null;
+        float prevDist = 10000000f;
+
+        foreach(var node in Pathdata.instance.AllNodes)
+        {
+            var dist = Vector3.Distance(checkLoc, node.WorldLocation);
+            if(prevDist > dist)
+            {
+                prevDist = dist;
+                idealNode = node;
+            }
+        }
+        if (idealNode == null)
+            return null;
+        else
+        {
+            var pathFindingNode = new PathFindingNode(idealNode, 0, 0);
+            return pathFindingNode;
+        }
+    }
 }
