@@ -2,17 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State_MoveToShelter : MonoBehaviour
+public class State_Move_StorageShelter : BaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public float LocationReachedTresheld = 0.1f;
+
+    public override void State_Init()
     {
-        
+        base.State_Init();
+    }
+    public override void State_Update()
+    {
+        base.State_Update();
+    }
+    public override void State_Enter()
+    {
+        base.State_Enter();
+        agent.SetDestination(TerrainGenerator.instance.storageShelter.transform.position);
+    }
+    public override void State_Exit()
+    {
+        base.State_Exit();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CanTransition_ToIdle(TransitionResponse response)
     {
-        
+        response.CanTransition = agent.ReachedDestination;
     }
 }

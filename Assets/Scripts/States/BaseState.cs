@@ -28,6 +28,7 @@ public class BaseState : MonoBehaviour
 {
     public string StateID;
     public List<Transition> Transitions;
+    public FSMCharacter agent;
 
     protected TransitionResponse response = new TransitionResponse();
 
@@ -50,7 +51,7 @@ public class BaseState : MonoBehaviour
 
     public virtual void State_Init()
     {
-
+        agent = GetComponent<FSMCharacter>();
     }
 
     public virtual void State_Update()

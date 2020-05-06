@@ -94,21 +94,30 @@ public class Pathdata : MonoBehaviour
         return newNode;
     }
 
-    public PathdataNode FindNode(Vector2Int checkLoc)
+    public PathdataNode FindNode(Vector2 checkLoc)
     {
-        int index = checkLoc.y * WorldSize.x + checkLoc.x;
+        Vector2Int gridLoc = WorldToGrid(checkLoc);
+        int index = gridLoc.x * WorldSize.y + gridLoc.y;
 
-        if(checkLoc.x < 0 || checkLoc.y < 0 || checkLoc.x >= WorldSize.x || checkLoc.y >= WorldSize.y)
+        if(gridLoc.x < 0 || gridLoc.y < 0 || gridLoc.x >= WorldSize.x || gridLoc.y >= WorldSize.y)
         {
             return null;
         }
 
         if(index < 0 || index > AllNodes.Count)
         {
-            Debug.Log(index + "" + checkLoc + "" + WorldSize);
+            Debug.Log(index + "" + gridLoc + "" + WorldSize);
         }
 
         return AllNodes[index];
+    }
+
+    public Vector2Int WorldToGrid(Vector2 worldPos)
+    {
+        Vector2Int gridLoc = Vector2Int.zero;
+        gridLoc.y = Mathf.RoundToInt(worldPos.x / TerrainGenerator.instance.terrain.terrainData.heightmapScale.z);
+        gridLoc.x = Mathf.RoundToInt(worldPos.y / TerrainGenerator.instance.terrain.terrainData.heightmapScale.x);
+        return gridLoc;
     }
 }
 

@@ -10,7 +10,7 @@ public class PathFindingNode : IEquatable<PathFindingNode>
     public float hCost; // How much it costs to get to the destination.
     public PathFindingNode parent; // The way to track back to a previous node
 
-    public PathFindingNode(PathdataNode node, int x, int z)
+    public PathFindingNode(PathdataNode node)
     {
         this.node = node;
     }
@@ -60,8 +60,8 @@ public class PathFinding : MonoBehaviour
     {
         List<PathFindingNode> openList = new List<PathFindingNode>(); // if empty there's a problem.
         List<PathFindingNode> closeList = new List<PathFindingNode>();
-        PathFindingNode startNode = new PathFindingNode(start, (int)start.WorldLocation.x, (int)start.WorldLocation.y);
-        PathFindingNode endNode = new PathFindingNode(end, (int)end.WorldLocation.x, (int)end.WorldLocation.y);
+        PathFindingNode startNode = new PathFindingNode(start);
+        PathFindingNode endNode = new PathFindingNode(end);
         List<PathdataNode> nodeList = new List<PathdataNode>(); // list of nodes to create a path.
         int loopedIterations = 0;
 
@@ -145,7 +145,7 @@ public class PathFinding : MonoBehaviour
                 }
                 if(!continueLoop)
                 {
-                    PathFindingNode brotherNode = new PathFindingNode(neighbour.link, (int)neighbour.link.WorldLocation.x, (int)neighbour.link.WorldLocation.y);
+                    PathFindingNode brotherNode = new PathFindingNode(neighbour.link);
                     brotherNode.parent = bestNode;
                     brotherNode.gCost = bestNode.gCost + Vector3.Distance(bestNode.node.WorldLocation, brotherNode.node.WorldLocation);
                     brotherNode.hCost = Vector3.Distance(endNode.node.WorldLocation, brotherNode.node.WorldLocation);
@@ -205,7 +205,7 @@ public class PathFinding : MonoBehaviour
             return null;
         else
         {
-            var pathFindingNode = new PathFindingNode(idealNode, 0, 0);
+            var pathFindingNode = new PathFindingNode(idealNode);
             return pathFindingNode;
         }
     }

@@ -4,23 +4,43 @@ using UnityEngine;
 
 public class State_Charge : BaseState
 {
-    public virtual void State_Init()
+    private IEnumerator Charge;
+    private bool charging;
+
+    public override void State_Init()
+    {
+        Charge = WaitforCharge();
+        charging = true;
+    }
+
+    public override void State_Update()
     {
 
     }
 
-    public virtual void State_Update()
+    public override void State_Enter()
+    {
+        StartCoroutine(Charge);
+    }
+
+    public override void State_Exit()
     {
 
     }
 
-    public virtual void State_Enter()
+    private IEnumerator WaitforCharge()
     {
-
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(2);
+            FindObjectOfType<FSMCharacter>().curCharge += 100;
+            charging = false;
+            break;
+        }
     }
 
-    public virtual void State_Exit()
+    public void CanTransition_ToIdle(TransitionResponse response)
     {
-
+        response.CanTransition = !charging;
     }
 }

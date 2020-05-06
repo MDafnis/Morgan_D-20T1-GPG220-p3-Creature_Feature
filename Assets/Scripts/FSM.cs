@@ -8,8 +8,8 @@ public class FSM : MonoBehaviour
     public List<BaseState> allStates;
     public BaseState initialState;
 
-    protected BaseState currentState;
-    protected BaseState nextState;
+    public BaseState currentState;
+    public BaseState nextState;
 
     // Start is called before the first frame update
     void Start()

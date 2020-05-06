@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class State_Move_ChargingStation : BaseState
 {
-    public virtual void State_Init()
+    public float LocationReachedTresheld = 0.1f;
+
+    public override void State_Init()
+    {
+        base.State_Init();
+    }
+    public override void State_Update()
+    {
+        base.State_Update();
+    }
+    public override void State_Enter()
+    {
+        base.State_Enter();
+        agent.SetDestination(TerrainGenerator.instance.chargingStation.transform.position);
+    }
+    public override void State_Exit()
     {
 
     }
 
-    public virtual void State_Update()
+    public void CanTransition_ToCharge(TransitionResponse response)
     {
-
-    }
-
-    public virtual void State_Enter()
-    {
-
-    }
-
-    public virtual void State_Exit()
-    {
-
+        response.CanTransition = agent.ReachedDestination;
     }
 }

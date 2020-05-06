@@ -12,6 +12,8 @@ public class FSMCharacter : MonoBehaviour
     protected List<PathdataNode> Path = null;
     protected int CurrentPoint = -1;
     protected Rigidbody CharacterRB;
+    public int curCharge = 100;
+    public bool stateActive = false;
 
     [Header("Reached Destination")]
     public float DestinationThreshold = 0.1f;
@@ -38,9 +40,9 @@ public class FSMCharacter : MonoBehaviour
     void Update()
     {
         // do we have no destination?
-        if (!HasDestination && TerrainGenerator.instance.sphereList.Count > 0)
+        if (!HasDestination && TerrainGenerator.instance.sphereList.Count > 0 && !stateActive)
         {
-            SetDestination(new Vector3(TerrainGenerator.instance.WaterShelter.transform.position.x, transform.position.y, TerrainGenerator.instance.WaterShelter.transform.position.z));
+            //SetDestination(new Vector3(TerrainGenerator.instance.waterShelter.transform.position.x, transform.position.y, TerrainGenerator.instance.waterShelter.transform.position.z)); // TerrainGenerator.instance.WaterShelter.transform.position.x, transform.position.y, TerrainGenerator.instance.WaterShelter.transform.position.z
         }
 
         // can and should draw path?
@@ -162,8 +164,14 @@ public class FSMCharacter : MonoBehaviour
         CurrentPoint = 0;
 
         // TODO - Call to pathfinding would go here. 
-        var myPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
-        var destPos = new Vector2Int((int)newDestination.x, (int)newDestination.z);
+        var myPos = new Vector2(transform.position.x, transform.position.z);
+
+        //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //sphere.GetComponent<SphereCollider>().enabled = false;
+        //sphere.transform.localScale = new Vector3(5, 5, 5);
+        //sphere.transform.position = new Vector3(myPos.x, transform.position.y, myPos.y);
+
+        var destPos = new Vector2(newDestination.x, newDestination.z);
         Path = PathFinding.instance.FindPath(Pathdata.instance.FindNode(myPos), Pathdata.instance.FindNode(destPos));
 
         if (Path == null || Path.Count == 0)

@@ -11760,7 +11760,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh13606
+  m_Name: pb_Mesh13652
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12064,6 +12064,7 @@ MonoBehaviour:
       m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
     TargetState: {fileID: 933771444}
+  agent: {fileID: 0}
 --- !u!114 &933771444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12095,8 +12096,8 @@ MonoBehaviour:
       m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
     TargetState: {fileID: 933771445}
+  agent: {fileID: 0}
   LocationReachedTresheld: 0.1
-  MovementTime: 5
 --- !u!114 &933771445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12128,6 +12129,7 @@ MonoBehaviour:
       m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
     TargetState: {fileID: 933771443}
+  agent: {fileID: 0}
   IdleTime_Min: 5
   IdleTime_Max: 10
 --- !u!114 &933771446
@@ -12160,7 +12162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LocationToRequest: {x: 0, y: 0}
-  DestinationThreshold: 0.1
+  DestinationThreshold: 5
   PointReachedThreshold: 0.1
   MaximumSpeed: 1
   Aggressiveness: 0.5
@@ -12486,6 +12488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378c12d06b03a43acbe04438c30745ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terrain: {fileID: 0}
   NumPasses: 2
   FeatureNoise_X: 8
   FeatureNoise_Z: 6
@@ -12495,7 +12498,9 @@ MonoBehaviour:
   TextureNoise_Amplitude: 0.05
   sphereList: []
   domeRadius: 59
-  WaterShelter: {fileID: 781914425119681528, guid: f333cc543857c754a85d9e293f98d15d,
+  prefabWaterShelter: {fileID: 781914425119681528, guid: f333cc543857c754a85d9e293f98d15d,
     type: 3}
-  StorageShelter: {fileID: 781914425119681528, guid: ac916f442186c3e4c834292b613f0c20,
+  waterShelter: {fileID: 0}
+  prefabStorageShelter: {fileID: 781914425119681528, guid: ac916f442186c3e4c834292b613f0c20,
     type: 3}
+  storageShelter: {fileID: 0}

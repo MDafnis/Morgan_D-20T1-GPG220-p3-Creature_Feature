@@ -12,6 +12,7 @@ public class State_Idle : BaseState
     public override void State_Init()
     {
         base.State_Init();
+        agent.stateActive = true;
     }
 
     public override void State_Update()
@@ -19,6 +20,10 @@ public class State_Idle : BaseState
         base.State_Update();
 
         IdleTimeRemaining -= Time.deltaTime;
+        if(IdleTimeRemaining <= 0)
+        {
+
+        }
     }
 
     public override void State_Enter()
@@ -33,7 +38,7 @@ public class State_Idle : BaseState
         base.State_Exit();
     }
 
-    public void CanTransition_ToPickLocation(TransitionResponse response)
+    public void CanTransition_ToNextAction(TransitionResponse response)
     {
         response.CanTransition = IdleTimeRemaining <= 0f;
     }

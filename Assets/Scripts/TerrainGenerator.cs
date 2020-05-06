@@ -5,6 +5,7 @@ using UnityEngine;
 public class TerrainGenerator : MonoBehaviour
 {
     public static TerrainGenerator instance;
+    public Terrain terrain;
 
     [Header("Feature Generation")]
     public int NumPasses = 5;
@@ -25,8 +26,12 @@ public class TerrainGenerator : MonoBehaviour
     public int domeRadius = 75;
 
     [Header("Shelters")]
-    public GameObject WaterShelter;
-    public GameObject StorageShelter;
+    public GameObject prefabWaterShelter;
+    public GameObject waterShelter;
+    public GameObject prefabStorageShelter;
+    public GameObject storageShelter;
+    public GameObject prefabChargingStation;
+    public GameObject chargingStation;
 
 
     Pathdata pd;
@@ -71,7 +76,7 @@ public class TerrainGenerator : MonoBehaviour
 		// retrieve the terrain
 		Terrain terrain = gameObject.GetComponent<Terrain>();
 
-        FindObjectOfType<Pathdata>().WorldSize = new Vector2Int(terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight);
+        FindObjectOfType<Pathdata>().WorldSize = new Vector2Int(terrain.terrainData.heightmapWidth - 1, terrain.terrainData.heightmapHeight - 1);
 
 		// grab the height information
 		float[,] terrainHeights = new float[terrain.terrainData.heightmapWidth,terrain.terrainData.heightmapHeight];
@@ -113,7 +118,7 @@ public class TerrainGenerator : MonoBehaviour
     void GenerateTerrain_Internal_Textures()
     {
 		// retrieve the terrain
-		Terrain terrain = gameObject.GetComponent<Terrain>();
+	    terrain = gameObject.GetComponent<Terrain>();
 
         // create the array to hold the weights
         float[,,] splatmapWeights = new float[terrain.terrainData.alphamapWidth, terrain.terrainData.alphamapHeight, terrain.terrainData.alphamapLayers];
@@ -133,15 +138,22 @@ public class TerrainGenerator : MonoBehaviour
         int waterShelterRadius = 8;
         int waterShelterRadiusSq = waterShelterRadius * waterShelterRadius;
 
-        Instantiate(WaterShelter);
-        WaterShelter.transform.position = new Vector3Int(35, 3, 35);
+        waterShelter = Instantiate(prefabWaterShelter);
+        waterShelter.transform.position = new Vector3Int(35, 3, 35);
 
         Vector2Int storageShelterLocation = new Vector2Int(75, 35);
         int storageShelterRadius = 10;
         int storageShelterRadiusSq = storageShelterRadius * storageShelterRadius;
 
-        Instantiate(StorageShelter);
-        StorageShelter.transform.position = new Vector3(35, 2.6f, 74);
+        storageShelter = Instantiate(prefabStorageShelter);
+        storageShelter.transform.position = new Vector3(35, 2.6f, 74);
+
+        Vector2Int chargingStationLocation = new Vector2Int(55, 55);
+        int chargingStationRadius = 5;
+        int chargingStationRadiusSq = chargingStationRadius * chargingStationRadius;
+
+        chargingStation = Instantiate(prefabChargingStation);
+        chargingStation.transform.position = new Vector3(55, 2.6f, 55);
 
         Pathdata pathdata = FindObjectOfType<Pathdata>();
 
@@ -162,21 +174,21 @@ public class TerrainGenerator : MonoBehaviour
                     node.blocking = true;
                 }
 
-                //int distToBlockoutSq = (x - blockoutLocation.x) * (x - blockoutLocation.x) + (z - blockoutLocation.y) * (z - blockoutLocation.y);
-                //if (distToBlockoutSq < blockoutRadiusSq)
-                //{
-                //    // if (distToBlockoutSq > treeRadiusSq)
-                //    // {
-                //    //     // Do tree spawning with higher scale factor on the noise
-                //    // }
-                //
-                //    splatmapWeights[x, z, 0] = 0f;
-                //    splatmapWeights[x, z, 1] = 0f;
-                //    splatmapWeights[x, z, 2] = 1f;
-                //    splatmapWeights[x, z, 3] = 0f;
-                //
-                //    continue;
-                //}
+                /*int distToBlockoutSq = (x - blockoutLocation.x) * (x - blockoutLocation.x) + (z - blockoutLocation.y) * (z - blockoutLocation.y);
+                if (distToBlockoutSq < blockoutRadiusSq)
+                {
+                    // if (distToBlockoutSq > treeRadiusSq)
+                    // {
+                    //     // Do tree spawning with higher scale factor on the noise
+                    // }
+                
+                    splatmapWeights[x, z, 0] = 0f;
+                    splatmapWeights[x, z, 1] = 0f;
+                    splatmapWeights[x, z, 2] = 1f;
+                    splatmapWeights[x, z, 3] = 0f;
+                
+                    continue;
+                }*/
 
                 int distToWaterShelterSq = (x - waterShelterLocation.x) * (x - waterShelterLocation.x) + (z - waterShelterLocation.y) * (z - waterShelterLocation.y);
                 if (distToWaterShelterSq < waterShelterRadiusSq)
@@ -195,7 +207,7 @@ public class TerrainGenerator : MonoBehaviour
                 }
 
                 int distToStorageShelterSq = (x - storageShelterLocation.x) * (x - storageShelterLocation.x) + (z - storageShelterLocation.y) * (z - storageShelterLocation.y);
-                if (distToStorageShelterSq < waterShelterRadiusSq)
+                if (distToStorageShelterSq < storageShelterRadiusSq)
                 {
                     // if (distToBlockoutSq > treeRadiusSq)
                     // {
@@ -205,6 +217,22 @@ public class TerrainGenerator : MonoBehaviour
                     splatmapWeights[x, z, 0] = 0f;
                     splatmapWeights[x, z, 1] = 1f;
                     splatmapWeights[x, z, 2] = 0f;
+                    splatmapWeights[x, z, 3] = 0f;
+
+                    continue;
+                }
+
+                int distToChargingStationSq = (x - chargingStationLocation.x) * (x - chargingStationLocation.x) + (z - chargingStationLocation.y) * (z - chargingStationLocation.y);
+                if (distToChargingStationSq < (chargingStationRadiusSq))
+                {
+                    // if (distToBlockoutSq > treeRadiusSq)
+                    // {
+                    //     // Do tree spawning with higher scale factor on the noise
+                    // }
+
+                    splatmapWeights[x, z, 0] = 0f;
+                    splatmapWeights[x, z, 1] = 0.9f;
+                    splatmapWeights[x, z, 2] = 0.1f;
                     splatmapWeights[x, z, 3] = 0f;
 
                     continue;
