@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State_FeedTree : BaseState
+public class State_CollectWater : BaseState
 {
     public virtual void State_Init()
     {
@@ -22,5 +22,10 @@ public class State_FeedTree : BaseState
     public virtual void State_Exit()
     {
 
+    }
+
+    public void CanTransition_ToMoveThirstyTree(TransitionResponse response)
+    {
+        //response.CanTransition = IdleTimeRemaining <= 0;
     }
 }

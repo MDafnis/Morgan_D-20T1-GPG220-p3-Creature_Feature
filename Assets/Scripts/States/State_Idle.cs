@@ -7,12 +7,11 @@ public class State_Idle : BaseState
     public float IdleTime_Min = 5f;
     public float IdleTime_Max = 10f;
 
-    protected float IdleTimeRemaining = -1f;
+    protected float IdleTimeRemaining = 0.1f;
 
     public override void State_Init()
     {
         base.State_Init();
-        agent.stateActive = true;
     }
 
     public override void State_Update()
@@ -35,11 +34,15 @@ public class State_Idle : BaseState
 
     public override void State_Exit()
     {
-        base.State_Exit();
+        agent.curCharge -= 15;
     }
 
-    public void CanTransition_ToNextAction(TransitionResponse response)
+    //public void CanTransition_ToCharge(TransitionResponse response)
+    //{
+        //response.CanTransition = IdleTimeRemaining <= 0f && agent.curCharge < 15;
+    //}
+    public void CanTransition_ToDecideActivity(TransitionResponse response)
     {
-        response.CanTransition = IdleTimeRemaining <= 0f;
+        response.CanTransition = IdleTimeRemaining <= 0f && TerrainGenerator.instance.treePlot.Count > 0 && agent.curCharge > 15;
     }
 }

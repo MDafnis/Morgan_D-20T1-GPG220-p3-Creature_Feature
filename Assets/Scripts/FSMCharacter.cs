@@ -13,7 +13,6 @@ public class FSMCharacter : MonoBehaviour
     protected int CurrentPoint = -1;
     protected Rigidbody CharacterRB;
     public int curCharge = 100;
-    public bool stateActive = false;
 
     [Header("Reached Destination")]
     public float DestinationThreshold = 0.1f;
@@ -39,12 +38,6 @@ public class FSMCharacter : MonoBehaviour
 
     void Update()
     {
-        // do we have no destination?
-        if (!HasDestination && TerrainGenerator.instance.sphereList.Count > 0 && !stateActive)
-        {
-            //SetDestination(new Vector3(TerrainGenerator.instance.waterShelter.transform.position.x, transform.position.y, TerrainGenerator.instance.waterShelter.transform.position.z)); // TerrainGenerator.instance.WaterShelter.transform.position.x, transform.position.y, TerrainGenerator.instance.WaterShelter.transform.position.z
-        }
-
         // can and should draw path?
         if (DEBUG_DrawPath && HasDestination)
         {

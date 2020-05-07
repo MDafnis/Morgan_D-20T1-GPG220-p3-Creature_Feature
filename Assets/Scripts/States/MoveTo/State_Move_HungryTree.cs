@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State_Move_WaterShelter : BaseState
+public class State_Move_HungryTree : BaseState
 {
     public float LocationReachedTresheld = 0.1f;
 
@@ -17,14 +17,16 @@ public class State_Move_WaterShelter : BaseState
     public override void State_Enter()
     {
         base.State_Enter();
-        agent.SetDestination(TerrainGenerator.instance.waterShelter.transform.position);
+        GameObject storedLocation = TerrainGenerator.instance.treePlot[Random.Range(0, TerrainGenerator.instance.treePlot.Count)];
+        agent.SetDestination(storedLocation.transform.position);
+        TerrainGenerator.instance.treePlot.Remove(storedLocation);
     }
     public override void State_Exit()
     {
         base.State_Exit();
     }
 
-    public void CanTransition_ToIdle(TransitionResponse response)
+    public void CanTransition_ToFeedTree(TransitionResponse response)
     {
         response.CanTransition = agent.ReachedDestination;
     }

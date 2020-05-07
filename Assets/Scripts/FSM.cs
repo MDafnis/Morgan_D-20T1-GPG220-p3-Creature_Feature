@@ -9,7 +9,6 @@ public class FSM : MonoBehaviour
     public BaseState initialState;
 
     public BaseState currentState;
-    public BaseState nextState;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +25,7 @@ public class FSM : MonoBehaviour
     void Update()
     {
         // check all of the transitions for the state
-        //BaseState newState = currentState.CheckTransitions();
+        BaseState nextState = currentState.CheckTransitions();
 
         // have a new state?
         if(nextState != null)

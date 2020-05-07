@@ -19,8 +19,18 @@ public class TerrainGenerator : MonoBehaviour
     public float TextureNoise_Amplitude = 0.5f;
 
     [Header("Sphere List")]
+    public GameObject prefabTree;
+    public GameObject tree;
+
+    [Header("Sphere List")]
     private int originalSphereList = 174;
     public List<GameObject> sphereList = new List<GameObject>();
+
+    [Header("Tree List")]
+    public List<GameObject> treePlot = new List<GameObject>();
+    public List<GameObject> plantedTrees = new List<GameObject>();
+    public List<GameObject> hungryTrees = new List<GameObject>();
+    public List<GameObject> thirstyTrees = new List<GameObject>();
 
     [Header("Dome Info")]
     public int domeRadius = 75;
@@ -130,10 +140,6 @@ public class TerrainGenerator : MonoBehaviour
 		int height = terrain.terrainData.alphamapHeight;
         int numLayers = terrain.terrainData.alphamapLayers;
 
-        //Vector2Int blockoutLocation = new Vector2Int(75, 75);
-        //int blockOutRadius = 25;
-        //int blockoutRadiusSq = blockOutRadius * blockOutRadius;
-
         Vector2Int waterShelterLocation = new Vector2Int(35, 35);
         int waterShelterRadius = 8;
         int waterShelterRadiusSq = waterShelterRadius * waterShelterRadius;
@@ -173,22 +179,6 @@ public class TerrainGenerator : MonoBehaviour
                 {
                     node.blocking = true;
                 }
-
-                /*int distToBlockoutSq = (x - blockoutLocation.x) * (x - blockoutLocation.x) + (z - blockoutLocation.y) * (z - blockoutLocation.y);
-                if (distToBlockoutSq < blockoutRadiusSq)
-                {
-                    // if (distToBlockoutSq > treeRadiusSq)
-                    // {
-                    //     // Do tree spawning with higher scale factor on the noise
-                    // }
-                
-                    splatmapWeights[x, z, 0] = 0f;
-                    splatmapWeights[x, z, 1] = 0f;
-                    splatmapWeights[x, z, 2] = 1f;
-                    splatmapWeights[x, z, 3] = 0f;
-                
-                    continue;
-                }*/
 
                 int distToWaterShelterSq = (x - waterShelterLocation.x) * (x - waterShelterLocation.x) + (z - waterShelterLocation.y) * (z - waterShelterLocation.y);
                 if (distToWaterShelterSq < waterShelterRadiusSq)
@@ -262,11 +252,10 @@ public class TerrainGenerator : MonoBehaviour
                     if (Random.Range(0f, 1f) < treeThreshold)                                                                  // objects/structures within the world.
                     {
                         // Spawn an object
-                        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        sphere.GetComponent<SphereCollider>().enabled = false;
-                        sphere.transform.position = nodePosition;
-                        sphereList.Add(sphere);
-
+                        tree = Instantiate(prefabTree);
+                        tree.transform.position = nodePosition;
+                        sphereList.Add(tree);
+                        treePlot.Add(tree);
                     }
 
                     splatmapWeights[x, z, 0] = 0f;

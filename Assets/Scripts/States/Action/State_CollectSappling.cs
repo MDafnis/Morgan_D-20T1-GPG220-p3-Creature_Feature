@@ -23,4 +23,9 @@ public class State_CollectSappling : BaseState
     {
 
     }
+
+    public void CanTransition_ToMoveTreePlot(TransitionResponse response)
+    {
+        //response.CanTransition = IdleTimeRemaining <= 0;
+    }
 }

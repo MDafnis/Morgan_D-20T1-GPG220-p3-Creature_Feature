@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State_Move_HungrySappling : BaseState
+public class State_Move_StorageShelter_Feed : BaseState
 {
     public float LocationReachedTresheld = 0.1f;
 
@@ -17,14 +17,14 @@ public class State_Move_HungrySappling : BaseState
     public override void State_Enter()
     {
         base.State_Enter();
-        agent.SetDestination(TerrainGenerator.instance.waterShelter.transform.position);
+        agent.SetDestination(TerrainGenerator.instance.storageShelter.transform.position);
     }
     public override void State_Exit()
     {
         base.State_Exit();
     }
 
-    public void CanTransition_ToIdle(TransitionResponse response)
+    public void CanTransition_ToFeedTree(TransitionResponse response)
     {
         response.CanTransition = agent.ReachedDestination;
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State_Move_PlantableLocation : BaseState
+public class State_Move_WaterShelter : BaseState
 {
     public float LocationReachedTresheld = 0.1f;
 
@@ -24,7 +24,7 @@ public class State_Move_PlantableLocation : BaseState
         base.State_Exit();
     }
 
-    public void CanTransition_ToIdle(TransitionResponse response)
+    public void CanTransition_ToWaterTree(TransitionResponse response)
     {
         response.CanTransition = agent.ReachedDestination;
     }

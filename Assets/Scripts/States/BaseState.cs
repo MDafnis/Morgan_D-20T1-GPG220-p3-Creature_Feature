@@ -32,7 +32,7 @@ public class BaseState : MonoBehaviour
 
     protected TransitionResponse response = new TransitionResponse();
 
-    public BaseState CheckTranstiions()
+    public BaseState CheckTransitions()
     {
         // check each transition
         TransitionResponse response = new TransitionResponse();
