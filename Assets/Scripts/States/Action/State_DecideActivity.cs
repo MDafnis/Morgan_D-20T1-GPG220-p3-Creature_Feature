@@ -4,32 +4,33 @@ using UnityEngine;
 
 public class State_DecideActivity : BaseState
 {
-    private int randomChoice;
+    private int randomChoice = 0;
     private bool reDecide = false;
 
     public override void State_Init()
     {
-
+		base.State_Init();
     }
 
     public override void State_Update()
     {
-
+		base.State_Update();
     }
 
     public override void State_Enter()
     {
-        randomChoice = Random.Range(1, 2);
+		base.State_Enter();
+        randomChoice = Random.Range(1, 3); // The number will never hit the max.
         switch (randomChoice)
         {
             case 1:
-                if(TerrainGenerator.instance.treePlot.Count == 0)
+                if(TerrainGenerator.instance.treePlot.Count > 0)
                 {
-                    reDecide = true;
+                    
                 }
                 else
                 {
-
+                    reDecide = true;
                 }
                 break;
             case 2:
@@ -47,7 +48,7 @@ public class State_DecideActivity : BaseState
 
     public override void State_Exit()
     {
-
+		base.State_Exit();
     }
 
     public void CanTransition_ToMoveToStorage(TransitionResponse response)
@@ -58,6 +59,11 @@ public class State_DecideActivity : BaseState
     public void CanTransition_ToReDecide(TransitionResponse response)
     {
         response.CanTransition = reDecide && randomChoice == 1 || reDecide && randomChoice == 2;
+        if(reDecide && randomChoice == 1 || reDecide && randomChoice == 2)
+        {
+            randomChoice = 0;
+            reDecide = false;
+        }
     }
 
     public void CanTransition_ToDecideTreeConsumption(TransitionResponse response)

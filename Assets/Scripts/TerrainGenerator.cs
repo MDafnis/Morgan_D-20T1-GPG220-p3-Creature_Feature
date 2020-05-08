@@ -18,6 +18,11 @@ public class TerrainGenerator : MonoBehaviour
     public float TextureNoise_Z = 16f;
     public float TextureNoise_Amplitude = 0.5f;
 
+    [Header("Robot Spawns")]
+    public GameObject robotPrefab;
+    public List<GameObject> robotList = new List<GameObject>(7);
+
+
     [Header("Sphere List")]
     public GameObject prefabTree;
     public GameObject tree;
@@ -243,7 +248,7 @@ public class TerrainGenerator : MonoBehaviour
                     splatmapWeights[x, z, 2] = 0f;
                     splatmapWeights[x, z, 3] = 1f;                    
                 } // otherwise make it a mix of dirt and grass
-                else
+                else if(node.blocking == false)
                 {
                     float grassWeight = TextureNoise_Amplitude * Mathf.PerlinNoise(TextureNoise_X * x / width, TextureNoise_Z * z / height);
 
@@ -256,6 +261,12 @@ public class TerrainGenerator : MonoBehaviour
                         tree.transform.position = nodePosition;
                         sphereList.Add(tree);
                         treePlot.Add(tree);
+                    }
+                    if(robotList.Count <= 7)
+                    {
+                        GameObject tempRobot = Instantiate(robotPrefab);
+                        tempRobot.transform.position = nodePosition;
+                        robotList.Add(tempRobot);
                     }
 
                     splatmapWeights[x, z, 0] = 0f;

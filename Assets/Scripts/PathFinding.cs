@@ -73,7 +73,7 @@ public class PathFinding : MonoBehaviour
 
 
             loopedIterations++;
-            if (loopedIterations > 1000) // 1000 is a throwaway number but is generally safe.
+            if (loopedIterations > 2000) // 1000 is a throwaway number but is generally safe.
             {
                 Debug.DrawLine(startNode.node.WorldLocation, endNode.node.WorldLocation, Color.magenta);
                 for (int i = 0; i < closeList.Count; i++)
@@ -165,7 +165,7 @@ public class PathFinding : MonoBehaviour
                 }
             }
         }
-
+        Debug.Log("failed to find path");
         return nodeList;
     }
 

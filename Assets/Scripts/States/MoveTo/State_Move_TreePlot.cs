@@ -17,14 +17,14 @@ public class State_Move_TreePlot : BaseState
     public override void State_Enter()
     {
         base.State_Enter();
-        agent.SetDestination(TerrainGenerator.instance.waterShelter.transform.position);
+        agent.SetDestination(agent.curObjective.transform.position);
     }
     public override void State_Exit()
     {
         base.State_Exit();
     }
 
-    public void CanTransition_ToWaterTree(TransitionResponse response)
+    public void CanTransition_ToPlantSappling(TransitionResponse response)
     {
         response.CanTransition = agent.ReachedDestination;
     }

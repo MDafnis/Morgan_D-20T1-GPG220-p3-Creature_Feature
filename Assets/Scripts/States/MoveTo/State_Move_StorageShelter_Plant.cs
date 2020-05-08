@@ -18,6 +18,9 @@ public class State_Move_StorageShelter_Plant : BaseState
     {
         base.State_Enter();
         agent.SetDestination(TerrainGenerator.instance.storageShelter.transform.position);
+        GameObject storedObject = TerrainGenerator.instance.treePlot[Random.Range(0, TerrainGenerator.instance.treePlot.Count)];
+        agent.curObjective = storedObject;
+        TerrainGenerator.instance.treePlot.Remove(storedObject);
     }
     public override void State_Exit()
     {

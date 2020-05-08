@@ -38,11 +38,41 @@ public class ManageTree : MonoBehaviour
             if (hungerTimer <= 0)
             {
                 treeHunger--;
+                hungerTimer = 20f;
                 if (!treeHungry && treeHunger <= (treeFoodCapacity / 4))
                 {
                     treeHungry = true;
                     TerrainGenerator.instance.hungryTrees.Add(gameObject);
                 }
+            }
+
+            thirstTimer -= Time.deltaTime;
+            if (thirstTimer <= 0)
+            {
+                treeThirst--;
+                thirstTimer = 20f;
+                if (!treeThirsty && treeThirst <= (treeFoodCapacity / 4))
+                {
+                    treeThirsty = true;
+                    TerrainGenerator.instance.thirstyTrees.Add(gameObject);
+                }
+            }
+
+            if (treeHunger <= 0)
+            {
+                treeHungry = false;
+                TerrainGenerator.instance.hungryTrees.Remove(gameObject);
+                TerrainGenerator.instance.hungryTrees.Add(gameObject);
+                treeMesh.SetActive(false);
+                treePlanted = false;
+            }
+            if(treeThirst <= 0)
+            {
+                treeThirsty = false;
+                TerrainGenerator.instance.thirstyTrees.Remove(gameObject);
+                TerrainGenerator.instance.treePlot.Add(gameObject);
+                treeMesh.SetActive(false);
+                treePlanted = false;
             }
             Mathf.Clamp(treeHunger, 0f, treeFoodCapacity);
             Mathf.Clamp(treeThirst, 0f, treeWaterCapacity);

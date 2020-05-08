@@ -17,9 +17,7 @@ public class State_Move_HungryTree : BaseState
     public override void State_Enter()
     {
         base.State_Enter();
-        GameObject storedLocation = TerrainGenerator.instance.treePlot[Random.Range(0, TerrainGenerator.instance.treePlot.Count)];
-        agent.SetDestination(storedLocation.transform.position);
-        TerrainGenerator.instance.treePlot.Remove(storedLocation);
+        agent.SetDestination(agent.curObjective.transform.position);
     }
     public override void State_Exit()
     {

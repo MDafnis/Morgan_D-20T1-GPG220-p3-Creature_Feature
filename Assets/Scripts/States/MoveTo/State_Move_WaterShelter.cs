@@ -18,6 +18,9 @@ public class State_Move_WaterShelter : BaseState
     {
         base.State_Enter();
         agent.SetDestination(TerrainGenerator.instance.waterShelter.transform.position);
+        GameObject storedObject = TerrainGenerator.instance.thirstyTrees[Random.Range(0, TerrainGenerator.instance.thirstyTrees.Count)];
+        agent.curObjective = storedObject;
+        TerrainGenerator.instance.thirstyTrees.Remove(storedObject);
     }
     public override void State_Exit()
     {

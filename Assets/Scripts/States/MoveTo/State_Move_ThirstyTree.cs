@@ -17,7 +17,7 @@ public class State_Move_ThirstyTree : BaseState
     public override void State_Enter()
     {
         base.State_Enter();
-        agent.SetDestination(TerrainGenerator.instance.waterShelter.transform.position);
+        agent.SetDestination(agent.curObjective.transform.position);
     }
     public override void State_Exit()
     {

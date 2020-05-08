@@ -8,26 +8,24 @@ public class State_Charge : BaseState
 
     public override void State_Init()
     {
-        
+        base.State_Init();
     }
 
     public override void State_Update()
     {
+		base.State_Update();
         IdleTimeRemaining -= Time.deltaTime;
-        if (IdleTimeRemaining <= 0)
-        {
-
-        }
     }
 
     public override void State_Enter()
     {
-
+		base.State_Enter();
     }
 
     public override void State_Exit()
     {
-
+		base.State_Exit();
+        agent.curCharge = 100;
     }
 
     public void CanTransition_ToIdle(TransitionResponse response)

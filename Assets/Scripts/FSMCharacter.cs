@@ -13,6 +13,7 @@ public class FSMCharacter : MonoBehaviour
     protected int CurrentPoint = -1;
     protected Rigidbody CharacterRB;
     public int curCharge = 100;
+    public GameObject curObjective;
 
     [Header("Reached Destination")]
     public float DestinationThreshold = 0.1f;

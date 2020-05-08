@@ -18,13 +18,16 @@ public class State_Move_StorageShelter_Feed : BaseState
     {
         base.State_Enter();
         agent.SetDestination(TerrainGenerator.instance.storageShelter.transform.position);
+        GameObject storedObject = TerrainGenerator.instance.hungryTrees[Random.Range(0, TerrainGenerator.instance.hungryTrees.Count)];
+        agent.curObjective = storedObject;
+        TerrainGenerator.instance.hungryTrees.Remove(storedObject);
     }
     public override void State_Exit()
     {
         base.State_Exit();
     }
 
-    public void CanTransition_ToFeedTree(TransitionResponse response)
+    public void CanTransition_ToCollectFood(TransitionResponse response)
     {
         response.CanTransition = agent.ReachedDestination;
     }
