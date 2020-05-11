@@ -64,11 +64,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\FSM.cs" />
     <Compile Include="Assets\Scripts\FSMCharacter.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\ManageTree.cs" />
     <Compile Include="Assets\Scripts\Obstacle.cs" />
     <Compile Include="Assets\Scripts\ObstacleManager.cs" />
     <Compile Include="Assets\Scripts\Pathdata.cs" />
     <Compile Include="Assets\Scripts\PathFinding.cs" />
+    <Compile Include="Assets\Scripts\SaveData.cs" />
     <Compile Include="Assets\Scripts\States\Action\State_Charge.cs" />
     <Compile Include="Assets\Scripts\States\Action\State_CollectFood.cs" />
     <Compile Include="Assets\Scripts\States\Action\State_CollectSappling.cs" />

@@ -144,6 +144,7 @@ MonoBehaviour:
   LocationToRequest: {x: 0, y: 0}
   curCharge: 100
   curObjective: {fileID: 0}
+  skipWaitingPeriod: 0
   DestinationThreshold: 5
   PointReachedThreshold: 0.1
   MaximumSpeed: 10
@@ -252,7 +253,24 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3798804368790557138}
-          m_MethodName: CanTransition_ToMoveToStorage
+          m_MethodName: CanTransition_ToDecideTreeConsumption
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    TargetState: {fileID: 3798804368790557149}
+  - OnCanTransition:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3798804368790557138}
+          m_MethodName: CanTransition_ToMoveToStoragePlant
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -282,23 +300,6 @@ MonoBehaviour:
       m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
     TargetState: {fileID: 3798804368790557138}
-  - OnCanTransition:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3798804368790557138}
-          m_MethodName: CanTransition_ToDecideTreeConsumption
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    TargetState: {fileID: 3798804368790557149}
   agent: {fileID: 0}
 --- !u!114 &3798804368790557137
 MonoBehaviour:
@@ -465,23 +466,6 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3798804368790557149}
-          m_MethodName: CanTransition_ToReDecide
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    TargetState: {fileID: 3798804368790557149}
-  - OnCanTransition:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3798804368790557149}
           m_MethodName: CanTransition_ToMoveToStorage
           m_Mode: 0
           m_Arguments:
@@ -495,6 +479,23 @@ MonoBehaviour:
       m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
     TargetState: {fileID: 3798804368790557144}
+  - OnCanTransition:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3798804368790557149}
+          m_MethodName: CanTransition_ToIdle
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    TargetState: {fileID: 3798804368790557101}
   agent: {fileID: 0}
 --- !u!114 &3798804368790557100
 MonoBehaviour:

@@ -184,8 +184,8 @@ MonoBehaviour:
     y: 0
     width: 330
     height: 627
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 222}
+  m_MaxSize: {x: 4002, y: 4022}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -266,8 +266,8 @@ MonoBehaviour:
     y: 0
     width: 596
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 72}
+  m_MaxSize: {x: 4002, y: 4022}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -310,9 +310,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 67.832306, y: -6.260708, z: 83.08832}
+    m_Target: {x: 117.99265, y: 24.034004, z: 91.63656}
     speed: 2
-    m_Value: {x: 67.832306, y: -6.260708, z: 83.08832}
+    m_Value: {x: 117.99265, y: 24.034004, z: 91.63656}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -341,13 +341,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.00019767282, y: 0.8896875, z: -0.4574476, w: -0.00666141}
+    m_Target: {x: 0.12807545, y: -0.8198987, z: 0.20829429, w: 0.5185018}
     speed: 2
-    m_Value: {x: -0.00018761799, y: 0.889996, z: -0.4559196, w: -0.0066588805}
+    m_Value: {x: 0.12895554, y: -0.8172026, z: 0.20762578, w: 0.52195966}
   m_Size:
-    m_Target: 73.93761
+    m_Target: 2.8578837
     speed: 2
-    m_Value: 77.42158
+    m_Value: 2.8578837
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -402,9 +402,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3c290000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 5ea2f5ff74a2f5ff58b7f5ff6eb7f5ffc0e8fdffd6e8fdffa8f7fdffbef7fdffc8f8fdffdef8fdff6617feff7c17feff1832feff2e32feff303cfeff463cfeffe844fefffe44feff76fbffff
+      m_SelectedIDs: 6057ffff
+      m_LastClickedID: -43168
+      m_ExpandedIDs: b4b1ffffcab1ffffc4b2ffffdab2ffff18b4ffff2eb4ffff76fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -574,20 +574,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/States/Action
+    - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/States/Action
+  - Assets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: F:\University\Morgan_D-20T1-GPG220-p3-Creature_Feature
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 70310000
-    m_LastClickedID: 12656
-    m_ExpandedIDs: 00000000822f000030320000d63200000c34000000ca9a3b
+    m_SelectedIDs: 32310000
+    m_LastClickedID: 12594
+    m_ExpandedIDs: 00000000842f000034320000da3200001034000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -615,7 +615,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000822f000030320000d63200000c340000
+    m_ExpandedIDs: 00000000842f000034320000da32000010340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

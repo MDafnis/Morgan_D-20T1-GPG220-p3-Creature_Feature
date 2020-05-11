@@ -21,6 +21,7 @@ public class State_DecideActivity : BaseState
     {
 		base.State_Enter();
         randomChoice = Random.Range(1, 3); // The number will never hit the max.
+        reDecide = false;
         switch (randomChoice)
         {
             case 1:
@@ -51,7 +52,7 @@ public class State_DecideActivity : BaseState
 		base.State_Exit();
     }
 
-    public void CanTransition_ToMoveToStorage(TransitionResponse response)
+    public void CanTransition_ToMoveToStoragePlant(TransitionResponse response)
     {
         response.CanTransition = reDecide != true && randomChoice == 1;
     }
@@ -59,11 +60,6 @@ public class State_DecideActivity : BaseState
     public void CanTransition_ToReDecide(TransitionResponse response)
     {
         response.CanTransition = reDecide && randomChoice == 1 || reDecide && randomChoice == 2;
-        if(reDecide && randomChoice == 1 || reDecide && randomChoice == 2)
-        {
-            randomChoice = 0;
-            reDecide = false;
-        }
     }
 
     public void CanTransition_ToDecideTreeConsumption(TransitionResponse response)

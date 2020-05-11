@@ -14,6 +14,7 @@ public class FSMCharacter : MonoBehaviour
     protected Rigidbody CharacterRB;
     public int curCharge = 100;
     public GameObject curObjective;
+    public bool skipWaitingPeriod = false;
 
     [Header("Reached Destination")]
     public float DestinationThreshold = 0.1f;

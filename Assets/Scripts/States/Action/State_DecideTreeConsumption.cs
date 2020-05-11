@@ -21,6 +21,7 @@ public class State_DecideTreeConsumption : BaseState
     {
 		base.State_Enter();
         randomChoice = Random.Range(1, 3); // The number will never hit the max.
+        reDecide = false;
         switch (randomChoice)
         {
             case 1:
@@ -56,14 +57,15 @@ public class State_DecideTreeConsumption : BaseState
         response.CanTransition = reDecide != true && randomChoice == 1;
     }
 
-    public void CanTransition_ToReDecide(TransitionResponse response)
+    public void CanTransition_ToIdle(TransitionResponse response)
     {
-        response.CanTransition = reDecide && randomChoice == 1 || reDecide && randomChoice == 2;
-        if (reDecide && randomChoice == 1 || reDecide && randomChoice == 2)
-        {
-            randomChoice = 0;
-            reDecide = false;
-        }
+        response.CanTransition = reDecide;
+        agent.skipWaitingPeriod = true;
+        //if (reDecide && randomChoice == 1 || reDecide && randomChoice == 2)
+        //{
+        //    randomChoice = 0;
+        //    reDecide = false;
+        //}
     }
 
     public void CanTransition_ToMoveToStorage(TransitionResponse response)

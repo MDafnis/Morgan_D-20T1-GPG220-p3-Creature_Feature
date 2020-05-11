@@ -11,8 +11,13 @@ public class State_Idle : BaseState
 
     public override void State_Init()
     {
-        IdleTimeRemaining = Random.Range(IdleTime_Min, IdleTime_Max);
         base.State_Init();
+        IdleTimeRemaining = Random.Range(IdleTime_Min, IdleTime_Max);
+        if(agent.skipWaitingPeriod)
+        {
+            IdleTimeRemaining = 0;
+            agent.skipWaitingPeriod = false;
+        }
     }
 
     public override void State_Update()
