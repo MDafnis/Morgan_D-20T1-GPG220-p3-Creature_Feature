@@ -66,33 +66,18 @@ public class ManageTree : MonoBehaviour
                 }
             }
 
-            // If the treeHunger is less than 0, set treeHungry to false, if the tree is in the thirsty list, remove the tree from that list, remove the tree 
-            // from the hungryTrees list, add the treePlot back so a tree can be planted again, remove the tree meshes and unregister the tree as planted.
+            // If the treeHunger is less than 0 and currentObjective is false, set treeHungry to false, run RemoveTree Function.
             if (treeHunger <= 0 && currentObjective != true)
             {
                 treeHungry = false;
-                if (TerrainGenerator.instance.thirstyTrees.Contains(gameObject))
-                {
-                    TerrainGenerator.instance.thirstyTrees.Remove(gameObject);
-                }
-                TerrainGenerator.instance.hungryTrees.Remove(gameObject);
-                TerrainGenerator.instance.treePlot.Add(gameObject);
                 RemoveTree();
             }
 
-            // If the treeThirst is less than 0, set treeThirst to false, if the tree is in the hungry list, remove the tree from that list, remove the tree from 
-            // the waterTrees list, add the treePlot back so a tree can be planted again, remove the tree meshes and unregister the tree as planted.
+            // If the treeThirst is less than 0 and currentObjective is false, set treeThirsty to false, run RemoveTree Function.
             if (treeThirst <= 0 && currentObjective != true)
             {
                 treeThirsty = false;
-                if (TerrainGenerator.instance.hungryTrees.Contains(gameObject))
-                {
-                    TerrainGenerator.instance.hungryTrees.Remove(gameObject);
-                }
-                TerrainGenerator.instance.thirstyTrees.Remove(gameObject);
-                TerrainGenerator.instance.treePlot.Add(gameObject);
-                treeMesh.SetActive(false);
-                treePlanted = false;
+                RemoveTree();
             }
             // Clamp the hunger and thirst to the max default capacity(20).
             Mathf.Clamp(treeHunger, 0f, treeFoodCapacity);
@@ -100,62 +85,90 @@ public class ManageTree : MonoBehaviour
         }
     }
 
+    // PlantTree adds the tree to the planted tree list, removes the tree from the treePlot list(pots that don't contain trees), enable the pot mesh, enable
+    // sappling mesh, set treePlanted bool to true.
     public void PlantTree()
     {
         TerrainGenerator.instance.plantedTrees.Add(gameObject);
         TerrainGenerator.instance.treePlot.Remove(gameObject);
+        plotMesh.SetActive(true);
         treeMesh.SetActive(true);
         treePlanted = true;
     }
 
     // FeedTree function sets the tree's thirsty bool to true, refills the plants hunger, disables the hungry bool, resets the hungerTimer, removes the tree
-    // from the hungry list, adds the tree to the thirsty list.
+    // from the hungry list.
     public void FeedTree()
     {
         treeThirsty = true;
-        treeHunger = 20f;
+        treeHunger = treeFoodCapacity;
         treeHungry = false;
         hungerTimer = defaultHungerTimer;
-        TerrainGenerator.instance.thirstyTrees.Add(gameObject);
+        TerrainGenerator.instance.hungryTrees.Remove(gameObject);
     }
 
     // WaterTree function refills the plants thirst, disables the thirsty bool, resets the thirstTimer, removes the tree from the thirsty list,
-    // checks the tree whether or not it has met max tree height, otherwise the tree will grow in height.
+    // checks the tree if it has met max height and if it has grown more than twice, otherwise the sappling will add to it's growCount, and will grow in height
+    // until the sappling has grown twice, once it grows more than twice; the sappling mesh will swap out with the evolvedTreeMesh, disable the plot mesh, and
+    // scale itself each time the tree is watered.
     public void WaterTree()
     {
-        treeThirst = 20f;
+        treeThirst = treeWaterCapacity;
         treeThirsty = false;
         thirstTimer = defaultThirstTimer;
-        if (treeMesh.transform.localScale.y > 10f)
+        TerrainGenerator.instance.thirstyTrees.Remove(gameObject);
+        if (treeMesh.transform.localScale.y > 3f && growthCount > 2)
         {
             treeMaxHeight = true;
             return;
         }
         else if (treeMaxHeight != true)
         {
-            if (growthCount < 2)
+            if (growthCount <= 2)
             {
-                treeMesh.transform.localScale = new Vector3(treeMesh.transform.localScale.x + baseHeightGrowth + (treeHunger / treeFoodCapacity),
-                                                            treeMesh.transform.localScale.y + baseHeightGrowth + (treeHunger / treeFoodCapacity),
-                                                            treeMesh.transform.localScale.z + baseHeightGrowth + (treeHunger / treeFoodCapacity));
+                treeMesh.transform.localScale = new Vector3((treeMesh.transform.localScale.x + baseHeightGrowth + treeHunger) / treeFoodCapacity,
+                                                            (treeMesh.transform.localScale.y + baseHeightGrowth + treeHunger) / treeFoodCapacity,
+                                                            (treeMesh.transform.localScale.z + baseHeightGrowth + treeHunger) / treeFoodCapacity);
             } else
             {
+                plotMesh.SetActive(false);
                 treeMesh.SetActive(false);
                 evolvedTreeMesh.SetActive(true);
-                evolvedTreeMesh.transform.localScale = new Vector3(evolvedTreeMesh.transform.localScale.x,
-                                                            evolvedTreeMesh.transform.localScale.y + baseHeightGrowth + (treeHunger / treeFoodCapacity),
-                                                            evolvedTreeMesh.transform.localScale.z);
+                evolvedTreeMesh.transform.localScale = new Vector3(evolvedTreeMesh.transform.localScale.x + (baseHeightGrowth / treeFoodCapacity),
+                                                            evolvedTreeMesh.transform.localScale.y + (baseHeightGrowth / treeFoodCapacity),
+                                                            evolvedTreeMesh.transform.localScale.z + (baseHeightGrowth / treeFoodCapacity));
             }
             growthCount++;
         }
     }
 
-    // This function disables the mesh of the tree no matter what type it is, and sets whether the tree is planted to false.
+    // This function checks the tree if it's within the list of hungry/thirsty, if so it will remove itself from the list, disables the mesh of the plot and tree
+    // meshes no matter what type it is, and sets whether the tree is planted to false, reset the treeThirst; treeHunger values, reset the treeThirstTimer and
+    // treeHungerTimer, remove the tree from the planted list, lastly checks if the tree is within the treePlot list, if not the function will add the tree back
+    // to the treePlot list ready to be planted again.
     public void RemoveTree()
     {
+        if (TerrainGenerator.instance.hungryTrees.Contains(gameObject))
+        {
+            TerrainGenerator.instance.hungryTrees.Remove(gameObject);
+        }
+        if (TerrainGenerator.instance.thirstyTrees.Contains(gameObject))
+        {
+            TerrainGenerator.instance.thirstyTrees.Remove(gameObject);
+        }
+        plotMesh.SetActive(false);
         treeMesh.SetActive(false);
         evolvedTreeMesh.SetActive(false);
         treePlanted = false;
+        treeThirst = treeWaterCapacity;
+        treeHunger = treeFoodCapacity;
+        thirstTimer = defaultThirstTimer;
+        hungerTimer = defaultHungerTimer;
+        TerrainGenerator.instance.plantedTrees.Remove(gameObject);
+        if (TerrainGenerator.instance.treePlot.Contains(gameObject) == false)
+        {
+            TerrainGenerator.instance.treePlot.Add(gameObject);
+        }
     }
 
     // Returns the boolean of treePlanted.

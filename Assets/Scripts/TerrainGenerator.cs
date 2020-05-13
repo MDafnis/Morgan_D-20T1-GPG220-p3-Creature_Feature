@@ -39,6 +39,7 @@ public class TerrainGenerator : MonoBehaviour
 
     [Header("Dome Info")]
     public int domeRadius = 75;
+    public int safePlantDistance = 3;
 
     [Header("Shelters")]
     public GameObject prefabWaterShelter;
@@ -180,19 +181,23 @@ public class TerrainGenerator : MonoBehaviour
                 PathdataNode node = pathdata.CreateNode(x, z, nodePosition);
 
                 int distFromCenterSq = (x - (width / 2)) * (x - (width / 2)) + (z - (height / 2)) * (z - (height / 2));
-                if (distFromCenterSq > (domeRadius*domeRadius))
+
+                float grassWeight = TextureNoise_Amplitude * Mathf.PerlinNoise(TextureNoise_X * x / width, TextureNoise_Z * z / height);
+
+                if (distFromCenterSq > (domeRadius - safePlantDistance) * (domeRadius - safePlantDistance))
                 {
                     node.blocking = true;
+                    splatmapWeights[x, z, 0] = 0f;
+                    splatmapWeights[x, z, 1] = 1f - grassWeight;
+                    splatmapWeights[x, z, 2] = 0.2f + grassWeight;
+                    splatmapWeights[x, z, 3] = 0f;
+
+                    continue;
                 }
 
                 int distToWaterShelterSq = (x - waterShelterLocation.x) * (x - waterShelterLocation.x) + (z - waterShelterLocation.y) * (z - waterShelterLocation.y);
                 if (distToWaterShelterSq < waterShelterRadiusSq)
                 {
-                    // if (distToBlockoutSq > treeRadiusSq)
-                    // {
-                    //     // Do tree spawning with higher scale factor on the noise
-                    // }
-
                     splatmapWeights[x, z, 0] = 0f;
                     splatmapWeights[x, z, 1] = 1f;
                     splatmapWeights[x, z, 2] = 0f;
@@ -204,11 +209,6 @@ public class TerrainGenerator : MonoBehaviour
                 int distToStorageShelterSq = (x - storageShelterLocation.x) * (x - storageShelterLocation.x) + (z - storageShelterLocation.y) * (z - storageShelterLocation.y);
                 if (distToStorageShelterSq < storageShelterRadiusSq)
                 {
-                    // if (distToBlockoutSq > treeRadiusSq)
-                    // {
-                    //     // Do tree spawning with higher scale factor on the noise
-                    // }
-
                     splatmapWeights[x, z, 0] = 0f;
                     splatmapWeights[x, z, 1] = 1f;
                     splatmapWeights[x, z, 2] = 0f;
@@ -250,22 +250,20 @@ public class TerrainGenerator : MonoBehaviour
                 } // otherwise make it a mix of dirt and grass
                 else if(node.blocking == false)
                 {
-                    float grassWeight = TextureNoise_Amplitude * Mathf.PerlinNoise(TextureNoise_X * x / width, TextureNoise_Z * z / height);
-
                     // would normally use different scale factors other than TextureNoise_
                     float treeThreshold = 0.025f * Mathf.PerlinNoise(TextureNoise_X * x / width, TextureNoise_Z * z / height); // The block of this and below could potentially be used to spawn 
                     if (Random.Range(0f, 1f) < treeThreshold)                                                                  // objects/structures within the world.
                     {
                         // Spawn an object
                         tree = Instantiate(prefabTree);
-                        tree.transform.position = nodePosition;
+                        tree.transform.position = nodePosition + (Vector3.up * 0.5f);
                         sphereList.Add(tree);
                         treePlot.Add(tree);
                     }
                     if(robotList.Count <= 7)
                     {
                         GameObject tempRobot = Instantiate(robotPrefab);
-                        tempRobot.transform.position = nodePosition;
+                        tempRobot.transform.position = nodePosition + (Vector3.up * 0.5f);
                         robotList.Add(tempRobot);
                     }
 

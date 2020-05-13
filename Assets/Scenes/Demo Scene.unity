@@ -11925,7 +11925,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh13964
+  m_Name: pb_Mesh14984
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12483,7 +12483,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.16042997, y: 0.37686956, z: -0.066452265, w: 0.9098437}
-  m_LocalPosition: {x: 26.52, y: 15.1, z: 13.04}
+  m_LocalPosition: {x: 19.9, y: 15.1, z: 19.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -12764,6 +12764,7 @@ MonoBehaviour:
   hungryTrees: []
   thirstyTrees: []
   domeRadius: 59
+  safePlantDistance: 10
   prefabWaterShelter: {fileID: 781914425119681528, guid: f333cc543857c754a85d9e293f98d15d,
     type: 3}
   waterShelter: {fileID: 0}

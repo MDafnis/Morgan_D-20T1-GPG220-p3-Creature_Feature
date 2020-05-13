@@ -639,7 +639,7 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: TransitionCheckEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-    TargetState: {fileID: 0}
+    TargetState: {fileID: 3798804368790557145}
   agent: {fileID: 0}
   LocationReachedTresheld: 0.1
 --- !u!114 &3798804368790557145
