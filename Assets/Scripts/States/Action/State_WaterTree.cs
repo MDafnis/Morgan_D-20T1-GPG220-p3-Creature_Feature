@@ -17,7 +17,8 @@ public class State_WaterTree : BaseState
     public override void State_Enter()
     {
 		base.State_Enter();
-        agent.curObjective.GetComponent<ManageTree>().waterTree();
+        agent.curObjective.GetComponent<ManageTree>().WaterTree();
+        agent.curObjective.GetComponent<ManageTree>().currentObjective = false;
     }
 
     public override void State_Exit()

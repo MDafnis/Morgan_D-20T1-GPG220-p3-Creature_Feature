@@ -17,7 +17,8 @@ public class State_FeedTree : BaseState
     public override void State_Enter()
     {
         base.State_Enter();
-        agent.curObjective.GetComponent<ManageTree>().feedTree();
+        agent.curObjective.GetComponent<ManageTree>().FeedTree();
+        agent.curObjective.GetComponent<ManageTree>().currentObjective = false;
     }
 
     public override void State_Exit()

@@ -17,7 +17,7 @@ public class State_PlantSappling : BaseState
     public override void State_Enter()
     {
 		base.State_Enter();
-        agent.curObjective.GetComponent<ManageTree>().plantTree();
+        agent.curObjective.GetComponent<ManageTree>().PlantTree();
     }
 
     public override void State_Exit()

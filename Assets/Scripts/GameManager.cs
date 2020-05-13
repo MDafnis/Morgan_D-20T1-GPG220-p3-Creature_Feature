@@ -26,9 +26,9 @@ public class GameManager : MonoBehaviour
             SD.treeLocationx.Add(tree.transform.position.x);
             SD.treeLocationy.Add(tree.transform.position.y);
             SD.treeLocationz.Add(tree.transform.position.z);
-            SD.isTree.Add(tree.treePlanted);
-            SD.hunger.Add(tree.treeHunger);
-            SD.thirst.Add(tree.treeThirst);
+            SD.isTree.Add(tree.GetTreePlanted());
+            SD.hunger.Add(tree.GetTreeHunger());
+            SD.thirst.Add(tree.GetTreeThirst());
         }
         bf.Serialize(file, SD);
         file.Close();
@@ -56,9 +56,9 @@ public class GameManager : MonoBehaviour
             {
                 ManageTree tree = trees[i];
                 tree.transform.position = new Vector3(SD.treeLocationx[i], SD.treeLocationy[i], SD.treeLocationz[i]);
-                tree.treePlanted = SD.isTree[i];
-                tree.treeHunger = SD.hunger[i];
-                tree.treeThirst = SD.thirst[i];
+                tree.SetTreePlanted(SD.isTree[i]);
+                tree.SetTreeHunger(SD.hunger[i]);
+                tree.SetTreeThirst(SD.thirst[i]);
             }
             Debug.Log("Loaded Info");
         }

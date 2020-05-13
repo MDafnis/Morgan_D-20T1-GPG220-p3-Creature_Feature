@@ -61,11 +61,6 @@ public class State_DecideTreeConsumption : BaseState
     {
         response.CanTransition = reDecide;
         agent.skipWaitingPeriod = true;
-        //if (reDecide && randomChoice == 1 || reDecide && randomChoice == 2)
-        //{
-        //    randomChoice = 0;
-        //    reDecide = false;
-        //}
     }
 
     public void CanTransition_ToMoveToStorage(TransitionResponse response)
