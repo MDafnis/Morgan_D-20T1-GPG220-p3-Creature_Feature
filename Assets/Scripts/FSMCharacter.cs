@@ -31,7 +31,7 @@ public class FSMCharacter : MonoBehaviour
     [Range(0f, 1f)] public float AvoidancePriority = 0.5f;
 
     [Header("Debug Controls")]
-    public bool DEBUG_DrawPath = true;
+    public bool DEBUG_DrawPath = false;
 
     void Start()
     {

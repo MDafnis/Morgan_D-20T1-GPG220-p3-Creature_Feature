@@ -6,6 +6,7 @@ public class TerrainGenerator : MonoBehaviour
 {
     public static TerrainGenerator instance;
     public Terrain terrain;
+    public GameObject Camera;
 
     [Header("Feature Generation")]
     public int NumPasses = 5;
@@ -65,22 +66,14 @@ public class TerrainGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (sphereList.Count > 0)
-            {
-                foreach (GameObject gameObjects in sphereList)
-                {
-                    Destroy(gameObjects);
-                }
-                sphereList.Clear();
-            }
-
-            GenerateTerrain();
-        }
+        //if(Input.GetKeyDown(KeyCode.P))
+        //{
+        //    var camAnimator = Camera.GetComponent<Animator>();
+        //    camAnimator.SetTrigger("playAnim");
+        //}
     }
 
-    void GenerateTerrain()
+    public void GenerateTerrain()
     {
         GenerateTerrain_Internal_Heights();
 

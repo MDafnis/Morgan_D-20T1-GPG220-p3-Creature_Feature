@@ -7,6 +7,28 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
+    public void GenerateNodes()
+    {
+        
+        TerrainGenerator tg = TerrainGenerator.instance;
+        var robots = FindObjectsOfType<FSMCharacter>();
+        foreach (FSMCharacter character in robots)
+        {
+            tg.robotList.Remove(character.gameObject);
+            Destroy(character.gameObject);
+        }
+        if (tg.sphereList.Count > 0)
+        {
+            foreach (GameObject gameObjects in tg.sphereList)
+            {
+                Destroy(gameObjects);
+            }
+            tg.sphereList.Clear();
+        }
+
+        tg.GenerateTerrain();
+    }
+
     public void Save()
     {
         SaveData SD = new SaveData();

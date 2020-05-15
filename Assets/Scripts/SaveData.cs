@@ -5,6 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
+    /// <summary>
+    /// In this file we make all the variables that will be used whenever saving or loading.
+    /// </summary>
     public List<float> robotLocationx = new List<float>();
     public List<float> robotLocationy = new List<float>();
     public List<float> robotLocationz = new List<float>();

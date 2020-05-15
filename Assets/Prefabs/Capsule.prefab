@@ -151,7 +151,7 @@ MonoBehaviour:
   Aggressiveness: 0.5
   EnableAvoidance: 1
   AvoidancePriority: 0.5
-  DEBUG_DrawPath: 1
+  DEBUG_DrawPath: 0
 --- !u!114 &3798804368790557102
 MonoBehaviour:
   m_ObjectHideFlags: 0
