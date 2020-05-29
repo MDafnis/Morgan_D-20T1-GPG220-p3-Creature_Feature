@@ -30,8 +30,6 @@ public class BaseState : MonoBehaviour
     public List<Transition> Transitions;
     public FSMCharacter agent;
 
-    protected TransitionResponse response = new TransitionResponse();
-
     public BaseState CheckTransitions()
     {
         // check each transition

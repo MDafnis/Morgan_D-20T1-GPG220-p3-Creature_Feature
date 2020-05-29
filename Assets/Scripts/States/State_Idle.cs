@@ -25,10 +25,6 @@ public class State_Idle : BaseState
         base.State_Update();
 
         IdleTimeRemaining -= Time.deltaTime;
-        if(IdleTimeRemaining <= 0)
-        {
-
-        }
     }
 
     public override void State_Enter()

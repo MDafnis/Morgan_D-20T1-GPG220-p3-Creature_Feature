@@ -6,22 +6,22 @@ public class State_CollectSappling : BaseState
 {
     public override void State_Init()
     {
-
+        base.State_Init();
     }
 
     public override void State_Update()
     {
-
+        base.State_Update();
     }
 
     public override void State_Enter()
     {
-
+        base.State_Enter();
     }
 
     public override void State_Exit()
     {
-
+        base.State_Exit();
     }
 
     public void CanTransition_ToMoveTreePlot(TransitionResponse response)

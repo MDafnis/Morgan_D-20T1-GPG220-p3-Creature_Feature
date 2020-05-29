@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class State_Move_ThirstyTree : BaseState
 {
-    public float LocationReachedTresheld = 0.1f;
-
     public override void State_Init()
     {
         base.State_Init();
